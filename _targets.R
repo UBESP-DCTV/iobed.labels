@@ -23,15 +23,27 @@ tar_option_set(
 list(
 
   # Import your file from custom (shared) location, and preprocess them
-  # tar_target(
-  #   db_raw_path,
-  #   file.path(get_input_data_path("db_raw.csv")),
-  #   format = "file"
-  # ),
+  tar_target(
+    redcap121BedRawPath,
+    file.path(
+      get_input_data_path("REDCAP121/20221012122623-REDCAP121-bed.rds")
+    ),
+    format = "file"
+  ),
+  tar_target(redcap121BedRaw, read_bed_data(redcap121BedRawPath)),
+
+  tar_target(redcap121Bed, preprocess_bed(redcap121BedRaw)),
+
+
+
+
+
+
+
 
 
   # compile yor report
-  # tar_render(report, here::here("reports/report.Rmd")),
+  tar_render(report, here::here("reports/report.Rmd"))
 
 
   # Decide what to share with other, and do it in a standard RDS format

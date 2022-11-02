@@ -16,3 +16,6 @@ list.files(here("R"), pattern = "\\.R$", full.names = TRUE) |>
 # use `tar_read(target_name)` to load a target anywhere (note that
 # `target_name` is NOT quoted!)
 
+
+bd <- tar_read(redcap121BedRaw)
+View(bd)

@@ -1,22 +1,22 @@
-library(tidyverse)
-library(here)
-library(writexl)
+# library(tidyverse)
+# library(here)
+# library(writexl)
+#
+#
+# bed_redcap_121 <- read_rds(here(
+#   "data-raw/REDCAP121/20221012122623-REDCAP121-bed.rds"
+# ))
+#
+#
+# tmp <- bed_redcap_121 |>
+#   mutate(cum_elapsed = cumsum(elapsed))
+#
 
-
-bed_redcap_121 <- read_rds(here(
-  "data-raw/REDCAP121/20221012122623-REDCAP121-bed.rds"
-))
-
-
-tmp <- bed_redcap_121 |>
-  mutate(cum_elapsed = cumsum(elapsed))
-
-
-
-cumfreq_data <- cumsum(bed_redcap_121$elapsed)
-bed_redcap_121$cum_elapsed <- cumfreq_data
-
-
+#
+# cumfreq_data <- cumsum(bed_redcap_121$elapsed)
+# bed_redcap_121$cum_elapsed <- cumfreq_data
+#
+#
 
 
 
