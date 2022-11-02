@@ -15,23 +15,104 @@ list.files(here::here("R"), pattern = "\\.R$", full.names = TRUE) |>
 
 # Set target-specific options such as packages.
 tar_option_set(
-  packages = c("readr"),
-  error = "continue"
+  packages = c("readr", "lubridate"),
+  error = "continue",
+  workspace_on_error = TRUE
 )
 
 # End this file with a list of target objects.
 list(
 
   # Import your file from custom (shared) location, and preprocess them
-  # tar_target(
-  #   db_raw_path,
-  #   file.path(get_input_data_path("db_raw.csv")),
-  #   format = "file"
-  # ),
+  tar_files_input(
+    RedcapIdFolders,
+    get_input_data_path() |>
+      list.dirs(recursive = FALSE) |>
+      normalizePath(mustWork = FALSE)
+  ),
+
+
+
+  tar_target(
+    redcap121BedRawPath,
+    file.path(
+      list.files(
+        RedcapIdFolders,
+        pattern = "-bed\\.rds$",
+        full.names = TRUE
+      ) |> normalizePath()
+    ),
+    pattern = map(RedcapIdFolders),
+    format = "file"
+  ),
+
+
+  tar_target(
+    redcap121VideoRawPath,
+    file.path(
+      list.files(
+        RedcapIdFolders,
+        pattern = "\\.mp4$",
+        full.names = TRUE
+      ) |> normalizePath()
+    ),
+    pattern = map(RedcapIdFolders),
+    format = "file"
+  ),
+
+  tar_target(
+    deltaMsVideoBed,
+    delta_ms_from_paths(redcap121VideoRawPath, redcap121BedRawPath),
+    pattern = map(redcap121VideoRawPath, redcap121BedRawPath)
+  ),
+
+
+
+
+  tar_target(
+    redcap121BedRaw,
+    read_bed_data(redcap121BedRawPath),
+    pattern = map(redcap121BedRawPath),
+    iteration = "list",
+    format = "qs"
+  ),
+
+  tar_target(
+    redcap121,
+    preprocess_bed(
+      redcap121BedRaw,
+      initial_deltams = deltaMsVideoBed
+    ),
+    pattern = map(redcap121BedRaw, deltaMsVideoBed),
+    iteration = "list",
+    format = "qs"
+  ),
+
+
+  tar_target(
+    redcap121XlsxOutputPath,
+    create_output_xlsx_path(redcap121BedRawPath),
+    pattern = map(redcap121BedRawPath)
+  ),
+
+  tar_target(
+    outputXlsx,
+    write_labeling_xlsx(redcap121, redcap121XlsxOutputPath),
+    format = "file",
+    pattern = map(redcap121, redcap121XlsxOutputPath)
+  ),
+
+
+
+
+
+
+
+
 
 
   # compile yor report
-  # tar_render(report, here::here("reports/report.Rmd")),
+  tar_render(report, here::here("reports/report.Rmd"))
 
 
   # Decide what to share with other, and do it in a standard RDS format

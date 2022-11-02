@@ -1,22 +1,27 @@
 Package: iobed.labels
 Title: Labels for IOBED data
 Version: 0.1.1
-Authors@R: 
-    c(
-        person("Corrado", "Lanera", , "corrado.lanera@ubep.unipd.it", role = c("aut", "cre"),
+Authors@R: c(
+    person("Corrado", "Lanera", , "corrado.lanera@ubep.unipd.it", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0520-7428")),
-        person("Maria Vittoria", "Chiaruttini", , "mariavittoria.chiaruttini@ubep.unipd.it",
-            role = "aut", comment = c(ORCID = "YOUR-ORCID-ID")),
-        person("Dario", "Gregori", , "dario.gregori@ubep.unipd.it", role = "ctb",
+    person("Maria Vittoria", "Chiaruttini", , "mariavittoria.chiaruttini@ubep.unipd.it", role = "aut",
+           comment = c(ORCID = "YOUR-ORCID-ID")),
+    person("Dario", "Gregori", , "dario.gregori@ubep.unipd.it", role = "ctb",
            comment = c(ORCID = "0000-0001-7906-0580"))
-    )
-Description: Functionality and pipelines to develop the files and infrastructure to labeling iobed data.
+  )
+Description: Functionality and pipelines to develop the files and
+    infrastructure to labeling iobed data.
 License: file LICENSE
 Imports: 
+    dplyr,
     fs,
+    lubridate,
     purrr,
     readr,
-    stringr
+    rlang (>= 0.4.11),
+    stringr,
+    tibble,
+    writexl
 Suggests: 
     blogdown,
     checkmate,
@@ -38,7 +43,9 @@ Suggests:
     miniUI,
     naniar,
     qs,
+    readxl,
     rms,
+    roxygen2,
     rstudioapi,
     shiny,
     spelling,

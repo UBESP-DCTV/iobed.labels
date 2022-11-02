@@ -1,9 +1,12 @@
 
 # Project packages (TO BE UPDATED EVERY NEW PACKAGE USED) ----------
 
-prj_pkgs <- c("fs", "readr", "stringr", "purrr")
+prj_pkgs <- c(
+  "fs", "readr", "stringr", "purrr", "here", "writexl",
+  "dplyr", "lubridate", "tibble", "readxl"
+)
 gh_prj_pkgs <- c()
-meta_pkgs <- c("tidymodels", "tidyverse")
+meta_pkgs <- c("tidyverse")
 
 renv::install(c(prj_pkgs, gh_prj_pkgs, meta_pkgs))
 
