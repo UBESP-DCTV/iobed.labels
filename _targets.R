@@ -15,24 +15,93 @@ list.files(here::here("R"), pattern = "\\.R$", full.names = TRUE) |>
 
 # Set target-specific options such as packages.
 tar_option_set(
-  packages = c("readr"),
-  error = "continue"
+  packages = c("readr", "lubridate"),
+  error = "continue",
+  workspace_on_error = TRUE
 )
 
 # End this file with a list of target objects.
 list(
 
   # Import your file from custom (shared) location, and preprocess them
+  tar_files_input(
+    RedcapIdFolders,
+    get_input_data_path() |>
+      list.dirs(recursive = FALSE) |>
+      normalizePath(mustWork = FALSE)
+  ),
+
+
+
   tar_target(
     redcap121BedRawPath,
     file.path(
-      get_input_data_path("REDCAP121/20221012122623-REDCAP121-bed.rds")
+      list.files(
+        RedcapIdFolders,
+        pattern = "-bed\\.rds$",
+        full.names = TRUE
+      ) |> normalizePath()
     ),
+    pattern = map(RedcapIdFolders),
     format = "file"
   ),
-  tar_target(redcap121BedRaw, read_bed_data(redcap121BedRawPath)),
 
-  tar_target(redcap121Bed, preprocess_bed(redcap121BedRaw)),
+
+  tar_target(
+    redcap121VideoRawPath,
+    file.path(
+      list.files(
+        RedcapIdFolders,
+        pattern = "\\.mp4$",
+        full.names = TRUE
+      ) |> normalizePath()
+    ),
+    pattern = map(RedcapIdFolders),
+    format = "file"
+  ),
+
+  tar_target(
+    deltaMsVideoBed,
+    delta_ms_from_paths(redcap121VideoRawPath, redcap121BedRawPath),
+    pattern = map(redcap121VideoRawPath, redcap121BedRawPath)
+  ),
+
+
+
+
+  tar_target(
+    redcap121BedRaw,
+    read_bed_data(redcap121BedRawPath),
+    pattern = map(redcap121BedRawPath),
+    iteration = "list",
+    format = "qs"
+  ),
+
+  tar_target(
+    redcap121,
+    preprocess_bed(
+      redcap121BedRaw,
+      initial_deltams = deltaMsVideoBed
+    ),
+    pattern = map(redcap121BedRaw, deltaMsVideoBed),
+    iteration = "list",
+    format = "qs"
+  ),
+
+
+  tar_target(
+    redcap121XlsxOutputPath,
+    create_output_xlsx_path(redcap121BedRawPath),
+    pattern = map(redcap121BedRawPath)
+  ),
+
+  tar_target(
+    outputXlsx,
+    write_labeling_xlsx(redcap121, redcap121XlsxOutputPath),
+    format = "file",
+    pattern = map(redcap121, redcap121XlsxOutputPath)
+  ),
+
 
 
 
