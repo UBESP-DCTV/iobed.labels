@@ -1,6 +1,7 @@
 test_that("read_bed_data return a tibble", {
+  skip_on_ci()
   # setup
-  example_bed_path <- targets::tar_read(redcap121BedRawPath)
+  example_bed_path <- targets::tar_read(redcap121BedRawPath_470e5e38)
 
   # execution
   res <- read_bed_data(example_bed_path)
@@ -14,8 +15,9 @@ test_that("read_bed_data return a tibble", {
 
 
 test_that("preprocess_bed return a tibble", {
+  skip_on_ci()
   # setup
-  db <- targets::tar_read(redcap121BedRaw)
+  db <- targets::tar_read(redcap121BedRaw_bd512a80)
   deltams <- 20000
 
   # execution
@@ -34,6 +36,7 @@ test_that("preprocess_bed return a tibble", {
 })
 
 test_that("get_time_from_filename works", {
+  skip_on_ci()
   # setup
   bed_name <- "20221012122623-REDCAP121-bed.rds"
   video_name <- "20221012122645-REDCAP121.mp4"
@@ -59,6 +62,7 @@ test_that("get_time_from_filename works", {
 
 
 test_that("milliseconds_gap works", {
+  skip_on_ci()
   # setup
   video_start <- lubridate::ymd_hms("20221012122645")
   bed_start <-   lubridate::ymd_hms("20221012122623")
@@ -74,6 +78,7 @@ test_that("milliseconds_gap works", {
 
 
 test_that("milliseconds_gap works", {
+  skip_on_ci()
   # setup
   bed_full_path <- get_input_data_path(
     "REDCAP121/20221012122623-REDCAP121-bed.rds"
@@ -104,6 +109,7 @@ test_that("milliseconds_gap works", {
 
 
 test_that("create_output_xlsx_path works", {
+  skip_on_ci()
   # setup
   input_bed_path <- get_input_data_path(
     "REDCAP121/20221012122623-REDCAP121-bed.rds"
@@ -123,8 +129,9 @@ test_that("create_output_xlsx_path works", {
 
 
 test_that("write_labeling_xlsx works", {
+  skip_on_ci()
   # setup
-  db <- targets::tar_read(redcap121)
+  db <- targets::tar_read(redcap121_53a0df9a)
   outpath <- fs::file_temp(ext = "xlsx")
 
   # eval

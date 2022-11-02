@@ -71,6 +71,3 @@ create_output_xlsx_path <- function(bed_path) {
 write_labeling_xlsx <- function(db, out_path) {
   writexl::write_xlsx(db, out_path)
 }
-
-
-

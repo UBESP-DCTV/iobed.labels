@@ -13,11 +13,14 @@ Description: Functionality and pipelines to develop the files and
     infrastructure to labeling iobed data.
 License: file LICENSE
 Imports: 
+    dplyr,
     fs,
-    here,
+    lubridate,
     purrr,
     readr,
+    rlang (>= 0.4.11),
     stringr,
+    tibble,
     writexl
 Suggests: 
     blogdown,
@@ -27,6 +30,7 @@ Suggests:
     devtools,
     distill,
     gitcreds,
+    here,
     htmltools,
     igraph,
     janitor,
@@ -39,7 +43,9 @@ Suggests:
     miniUI,
     naniar,
     qs,
+    readxl,
     rms,
+    roxygen2,
     rstudioapi,
     shiny,
     spelling,
