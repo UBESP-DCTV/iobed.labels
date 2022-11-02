@@ -1,13 +1,13 @@
 PATH="${RTOOLS40_HOME}\usr\bin;${PATH}"
 
 # Project's information: ONE SINGLE LINE EACH (no line brakes!!)
-PROJ_TITLE="Project's Title"
-PROJ_DESCRIPTION="Project's description."
-PROJ_URL="https://github.com/UBESP-DCTV/laims.analysis"
+PROJ_TITLE="Labels for IOBED data"
+PROJ_DESCRIPTION="Functionality and pipelines to develop the files and infrastructure to labeling iobed data."
+PROJ_URL="https://github.com/UBESP-DCTV/iobed.labels"
 
 # Shared folders local locations
 # PATH should be a proper path (C:\\...)
-PRJ_SHARED_PATH=""
+PRJ_SHARED_PATH="~/../Unit of Biostatistics Epidemiology and Public Health/LAIMS - IOBED/Labels"
 # FOLDER shoud be only the name on the folder (and not the full path to that folder)
 INPUT_DATA_FOLDER="data-raw"
 OUTPUT_DATA_FOLDER="output"

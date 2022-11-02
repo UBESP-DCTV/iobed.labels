@@ -1,4 +1,4 @@
 library(testthat)
-library(laims.analysis)
+library(iobed.labels)
 
-test_check("laims.analysis")
+test_check("iobed.labels")
