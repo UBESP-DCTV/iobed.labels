@@ -34,7 +34,7 @@ list(
 
 
   tar_target(
-    redcap121BedRawPath,
+    redcapBedRawPath,
     file.path(
       list.files(
         RedcapIdFolders,
@@ -48,7 +48,7 @@ list(
 
 
   tar_target(
-    redcap121VideoRawPath,
+    redcapVideoRawPath,
     file.path(
       list.files(
         RedcapIdFolders,
@@ -62,44 +62,44 @@ list(
 
   tar_target(
     deltaMsVideoBed,
-    delta_ms_from_paths(redcap121VideoRawPath, redcap121BedRawPath),
-    pattern = map(redcap121VideoRawPath, redcap121BedRawPath)
+    delta_ms_from_paths(redcapVideoRawPath, redcapBedRawPath),
+    pattern = map(redcapVideoRawPath, redcapBedRawPath)
   ),
 
 
 
 
   tar_target(
-    redcap121BedRaw,
-    read_bed_data(redcap121BedRawPath),
-    pattern = map(redcap121BedRawPath),
+    redcapBedRaw,
+    read_bed_data(redcapBedRawPath),
+    pattern = map(redcapBedRawPath),
     iteration = "list",
     format = "qs"
   ),
 
   tar_target(
-    redcap121,
+    redcap,
     preprocess_bed(
-      redcap121BedRaw,
+      redcapBedRaw,
       initial_deltams = deltaMsVideoBed
     ),
-    pattern = map(redcap121BedRaw, deltaMsVideoBed),
+    pattern = map(redcapBedRaw, deltaMsVideoBed),
     iteration = "list",
     format = "qs"
   ),
 
 
   tar_target(
-    redcap121XlsxOutputPath,
-    create_output_xlsx_path(redcap121BedRawPath),
-    pattern = map(redcap121BedRawPath)
+    redcapXlsxOutputPath,
+    create_output_xlsx_path(redcapBedRawPath),
+    pattern = map(redcapBedRawPath, redcap)
   ),
 
   tar_target(
     outputXlsx,
-    write_labeling_xlsx(redcap121, redcap121XlsxOutputPath),
+    write_labeling_xlsx(redcap, redcapXlsxOutputPath),
     format = "file",
-    pattern = map(redcap121, redcap121XlsxOutputPath)
+    pattern = map(redcap, redcapXlsxOutputPath)
   ),
 
 

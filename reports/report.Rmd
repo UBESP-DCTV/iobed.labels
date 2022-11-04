@@ -99,7 +99,7 @@ targets::tar_visnetwork(
 Here below just a glimpse of our data
 
 ```{r}
-tar_read(redcap121)
+tar_read(redcap121, branches = 2)
 ```
 
 

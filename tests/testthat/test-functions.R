@@ -27,12 +27,30 @@ test_that("preprocess_bed return a tibble", {
   # expectations
   expect_tibble(res)
   expect_true("cum_elapsed" %in% names(res))
-  expect_equal(res[["cum_elapsed"]][1:2], c(300, 600))
+  expect_equal(res[["cum_elapsed"]][1:3], c(0, 300, 601))
 
   expect_true(
     all(res_deltams[["cum_elapsed"]] > deltams)
   )
   expect_lt(nrow(res_deltams), nrow(res))
+  expect_false("clock" %in% names(res))
+
+  expect_names(
+    c(
+      "static_bed", "static_self", "dyn_bed", "dyn_self",
+      "frame_n", "video_time"
+    ),
+    subset.of = names(res)
+  )
+
+  c("static_bed", "static_self", "dyn_bed", "dyn_self") |>
+    purrr::walk(~expect_true(all(is.na(res[[.x]]))))
+
+  expect_equal(res[["frame_n"]][[1]], 1)
+  expect_equal(res[["frame_n"]][[2]], 10)
+  expect_equal(res[["video_time"]][[1]], "0S")
+  expect_equal(res[["video_time"]][[2]], "0.3S")
+
 })
 
 test_that("get_time_from_filename works", {
@@ -142,4 +160,55 @@ test_that("write_labeling_xlsx works", {
   expect_tibble(stored_db)
   expect_equal(names(stored_db[1]), "sbl")
   expect_true("cum_elapsed" %in% names(stored_db))
+})
+
+
+test_that("ms2frame works correctly", {
+  # setup
+  time_1s <- 1000
+  time_2s <- 2000
+  time_05s <- 500
+  time_0533s <- 533
+  time_0534s <- 534
+  time_300 <- 300
+
+  # evaluation
+  res_1s <- ms2frame(time_1s)
+  res_2s <- ms2frame(time_2s)
+  res_05s <- ms2frame(time_05s)
+  res_0533s <- ms2frame(time_0533s)
+  res_0534s <- ms2frame(time_0534s)
+  res_300 <- ms2frame(time_300)
+
+  # test
+  expect_equal(res_1s, 31)
+  expect_equal(res_2s, 61)
+  expect_equal(res_05s, 16)
+  expect_equal(res_0533s, 16)
+  expect_equal(res_0534s, 17)
+  expect_equal(res_300, 10)
+})
+
+
+test_that("ms2frame works correctly", {
+  # setup
+  ms_1s <- 1000
+  ms_03s <- 300
+  ms_60s <- 60000
+  ms_1h <- 3600000
+  ms_strange <- 60221
+
+  # evaluation
+  res_1s <- ms2time(ms_1s)
+  res_03s <- ms2time(ms_03s)
+  res_60s <- ms2time(ms_60s)
+  res_1h <- ms2time(ms_1h)
+  res_strange <- ms2time(ms_strange)
+
+  # test
+  expect_equal(res_1s, "1S")
+  expect_equal(res_03s, "0.3S")
+  expect_equal(res_60s, "1M 0S")
+  expect_equal(res_1h, "1H 0M 0S")
+  expect_equal(res_strange, "1M 0.221S")
 })

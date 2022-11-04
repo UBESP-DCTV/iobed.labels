@@ -19,3 +19,10 @@ list.files(here("R"), pattern = "\\.R$", full.names = TRUE) |>
 
 bd <- tar_read(redcap121BedRaw)
 View(bd)
+
+
+tar_read(RedcapIdFolders)
+
+
+a <- tar_read(redcapBedRaw, branches = 1)[[1]]
+a$clock[1:2] |> str()
