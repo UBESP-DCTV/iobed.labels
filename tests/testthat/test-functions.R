@@ -29,9 +29,7 @@ test_that("preprocess_bed return a tibble", {
   expect_true("cum_elapsed" %in% names(res))
   expect_equal(res[["cum_elapsed"]][1:3], c(0, 300, 601))
 
-  expect_true(
-    all(res_deltams[["cum_elapsed"]] > deltams)
-  )
+  expect_equal(res_deltams[["cum_elapsed"]][1:3], c(0, 298, 598))
   expect_lt(nrow(res_deltams), nrow(res))
   expect_false("clock" %in% names(res))
 

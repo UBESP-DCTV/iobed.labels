@@ -24,16 +24,19 @@ preprocess_bed <- function(x, initial_deltams = 0) {
     dplyr::select(-dplyr::any_of("clock")) |>
     dplyr::mutate(
       cum_elapsed = cumsum(.data[["elapsed"]]) -
-        dplyr::first(.data[["elapsed"]]),
+        dplyr::first(.data[["elapsed"]])
+    ) |>
+    dplyr::filter(.data[["cum_elapsed"]] >= initial_deltams) |>
+    dplyr::mutate(
+      cum_elapsed = .data[["cum_elapsed"]] -
+        dplyr::first(.data[["cum_elapsed"]]),
       frame_n = ms2frame(.data[["cum_elapsed"]]),
       video_time = ms2time(.data[["cum_elapsed"]]),
       static_bed = NA,
       static_self = NA,
       dyn_bed = NA,
       dyn_self = NA
-    ) |>
-    dplyr::filter(.data[["cum_elapsed"]] >= initial_deltams)
-
+    )
 }
 
 

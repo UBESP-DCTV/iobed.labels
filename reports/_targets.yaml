@@ -1,4 +1,4 @@
 main:
-  script: C:/Users/corrado.lanera/Documents/ubep/iobed.labels/_targets.R
-  store: C:/Users/corrado.lanera/Unit of Biostatistics Epidemiology and Public Health/LAIMS
-    - IOBED/Labels/_targets
+  script: /home/cl/GitHub/UBEP/iobed.labels/_targets.R
+  store: /home/cl/Insync/corrado.lanera@ubep.unipd.it/OneDrive Biz - SharePoint/LAIMS
+    - Documenti/IOBED/Labels/_targets
