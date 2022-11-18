@@ -92,7 +92,7 @@ list(
   tar_target(
     redcapXlsxOutputPath,
     create_output_xlsx_path(redcapBedRawPath),
-    pattern = map(redcapBedRawPath, redcap)
+    pattern = map(redcapBedRawPath)
   ),
 
   tar_target(
@@ -100,7 +100,7 @@ list(
     write_labeling_xlsx(redcap, redcapXlsxOutputPath),
     format = "file",
     pattern = map(redcap, redcapXlsxOutputPath)
-  ),
+  )
 
 
 
@@ -112,7 +112,7 @@ list(
 
 
   # compile yor report
-  tar_render(report, here::here("reports/report.Rmd"))
+  # tar_render(report, here::here("reports/report.Rmd"))
 
 
   # Decide what to share with other, and do it in a standard RDS format

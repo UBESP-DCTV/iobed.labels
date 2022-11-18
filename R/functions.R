@@ -32,10 +32,12 @@ preprocess_bed <- function(x, initial_deltams = 0) {
         dplyr::first(.data[["cum_elapsed"]]),
       frame_n = ms2frame(.data[["cum_elapsed"]]),
       video_time = ms2time(.data[["cum_elapsed"]]),
+      tilt_bed = NA,
       static_bed = NA,
       static_self = NA,
       dyn_bed = NA,
-      dyn_self = NA
+      dyn_self = NA,
+      note = NA
     )
 }
 
@@ -91,5 +93,7 @@ create_output_xlsx_path <- function(bed_path) {
 
 
 write_labeling_xlsx <- function(db, out_path) {
-  writexl::write_xlsx(db, out_path)
+  db |>
+    dplyr::select(-all_of(c("elapsed", "cum_elapsed"))) |>
+    writexl::write_xlsx(out_path)
 }

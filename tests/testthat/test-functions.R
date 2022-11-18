@@ -157,7 +157,9 @@ test_that("write_labeling_xlsx works", {
   # test
   expect_tibble(stored_db)
   expect_equal(names(stored_db[1]), "sbl")
-  expect_true("cum_elapsed" %in% names(stored_db))
+  expect_false(
+    any(c("elapsed", "cum_elapsed") %in% names(stored_db))
+  )
 })
 
 

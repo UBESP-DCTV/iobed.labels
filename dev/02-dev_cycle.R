@@ -1,5 +1,6 @@
 
 # Project packages (TO BE UPDATED EVERY NEW PACKAGE USED) ----------
+usethis::use_tidy_eval()
 
 prj_pkgs <- c(
   "fs", "readr", "stringr", "purrr", "here", "writexl",
