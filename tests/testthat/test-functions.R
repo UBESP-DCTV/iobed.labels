@@ -122,6 +122,36 @@ test_that("milliseconds_gap works", {
 })
 
 
+test_that("milliseconds_gap works", {
+  skip_on_ci()
+  # setup
+  bed_full_path1 <- get_input_data_path(
+    "REDCAP13/20220908152632-REDCAP13-bed.rds"
+  )
+  bed_full_path2 <- get_input_data_path(
+    "REDCAP13/20220907155456-REDCAP13-bed.rds"
+  )
+
+  bed_full_path <- c(bed_full_path1, bed_full_path2)
+
+  video_full_path1 <- get_input_data_path(
+    "REDCAP13/20221012122645-REDCAP121.mp4"
+  )
+  video_full_path2 <- get_input_data_path(
+    "REDCAP13/20220907155517-REDCAP13.mp4"
+  )
+  video_full_path1 <- c(video_full_path1, video_full_path2)
+
+
+  # eval
+  delta_s <- delta_ms_from_paths(video_full_path, bed_full_path)
+
+  # test
+  expect_integer(delta_s)
+  expect_equal(delta_s, 22000)
+})
+
+
 
 
 test_that("create_output_xlsx_path works", {
