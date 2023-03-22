@@ -1,4 +1,4 @@
 main:
-  script: C:/Users/MarziaRitaGreco/Documents/github/iobed.labels/_targets.R
-  store: C:/Users/MarziaRitaGreco/Unit of Biostatistics Epidemiology and Public Health/LAIMS
+  script: C:/Users/corrado.lanera/Documents/GitHub/ubep/iobed.labels/_targets.R
+  store: C:/Users/corrado.lanera/Unit of Biostatistics Epidemiology and Public Health/LAIMS
     - Labels/_targets
