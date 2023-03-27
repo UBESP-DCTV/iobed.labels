@@ -6,7 +6,7 @@ read_bed_data <- function(path) {
 
 
 ms2frame <- function(ms) {
-  1 + floor(ms * (1e-3)/25) # 25fps
+  floor(ms / 0.00004) # 25fps
 }
 
 ms2time <- function(ms) {
